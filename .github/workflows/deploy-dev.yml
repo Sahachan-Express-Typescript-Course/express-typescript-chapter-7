@@ -34,20 +34,20 @@ jobs:
             - name: Log in to Docker Hub
               uses: docker/login-action@v1
               with:
-                username: ${{ secrets.DOCKER_USERNAME }}
-                password: ${{ secrets.DOCKER_TOKEN }}
+                  username: ${{ secrets.DOCKER_USERNAME }}
+                  password: ${{ secrets.DOCKER_TOKEN }}
 
             - name: Build and push
               uses: docker/build-push-action@v2
               with:
-                context: .
-                push: true
-                tags: ${{ secrets.DOCKER_USERNAME }}/dev-ts-ex-ch7:dev
+                  context: .
+                  push: true
+                  tags: ${{ secrets.DOCKER_USERNAME }}/dev-ts-ex-ch7:dev
 
-            - name: composing
-              run: |
-                  mkdir dev-ts-ex-ch7-app
-                  cp compose.yml dev-ts-ex-ch7-app/compose.yml
-                  cd dev-ts-ex-ch7-app
-                  docker-compose -H ${{ secrets.DOCKER_HOST }} pull
-                  docker-compose -H ${{ secrets.DOCKER_HOST }} up -d
+#            - name: composing
+#              run: |
+#                  mkdir dev-ts-ex-ch7-app
+#                  cp compose.yml dev-ts-ex-ch7-app/compose.yml
+#                  cd dev-ts-ex-ch7-app
+#                  docker-compose -H ${{ secrets.DOCKER_HOST }} pull
+#                  docker-compose -H ${{ secrets.DOCKER_HOST }} up -d
