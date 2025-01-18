@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
+import { Movie } from './movie/entity/movie.model.js';
+import { Comment } from './movie/entity/comment.model.js';
 
 export const AppDataSource = new DataSource({
     type: 'postgres',
@@ -8,8 +10,7 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    synchronize: true,
+    synchronize: process.env.RESET_DB === 'true',
     logging: false,
-    migrations: [],
-    subscribers: [],
+    entities: [Movie, Comment],
 });
