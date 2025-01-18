@@ -147,4 +147,31 @@ export class MovieService {
 
         return queryBuilder.getRawMany();
     }
+    async searchMoviesByReleaseDate(
+        startDate: string | undefined,
+        endDate: string | undefined,
+        orderBy: 'ASC' | 'DESC'
+      ): Promise<{ movie_id: string; movie_title: string; release_date: string }[]> {
+          const queryBuilder = MovieRepository.createQueryBuilder('movie')
+              .select('movie.id', 'movie_id') // Select movie.id as movie_id
+              .addSelect('movie.title', 'movie_title') // Select movie.title as movie_title
+              .addSelect('movie.releaseDate', 'release_date'); // Select movie.release_date as release_date
+      
+          // Add WHERE condition for start date
+          if (startDate) {
+              queryBuilder.where('movie.releaseDate >= :startDate', { startDate });
+          }
+      
+          // Add WHERE condition for end date
+          if (endDate) {
+              queryBuilder.andWhere('movie.releaseDate <= :endDate', { endDate });
+          }
+      
+          // Add ORDER BY clause
+          queryBuilder.orderBy('movie.releaseDate', orderBy.toUpperCase() as 'ASC' | 'DESC');
+      
+          // Execute query and return results
+          return queryBuilder.getRawMany();
+      }
+      
 }
