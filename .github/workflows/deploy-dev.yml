@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
     push:
         branches:
-            - dev
+            - prod
 
 jobs:
     build-and-deploy:
@@ -23,7 +23,7 @@ jobs:
             # Step 3: Write .env.dev file dynamically from GitHub Secret
             - name: Create .env file
               run: |
-                  echo ${{ secrets.DEV_ENV_FILE }} | base64 --decode > .env.dev
+                  echo ${{ secrets.PROD_ENV_FILE }} | base64 --decode > .env.prod
 
             - name: Set up QEMU
               uses: docker/setup-qemu-action@v1
@@ -42,7 +42,7 @@ jobs:
               with:
                   context: .
                   push: true
-                  tags: ${{ secrets.DOCKER_USERNAME }}/dev-ts-ex-ch7:dev
+                  tags: ${{ secrets.DOCKER_USERNAME }}/dev-ts-ex-ch7:latest
 
 #            - name: composing
 #              run: |
