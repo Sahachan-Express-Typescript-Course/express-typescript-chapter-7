@@ -88,6 +88,7 @@ export class MovieController {
         const movies = await this.movieService.searchMoviesWithDynamicConditions(q, rateNumber, orderBy);
         res.status(200).json(movies);
     };
+
     searchMoviesByReleaseDate = async (req: Request, res: Response): Promise<void> => {
         try {
             const startDate = req.query.start_date as string | undefined;
@@ -111,4 +112,22 @@ export class MovieController {
     };
     
     
+
+
+    getMoviesByTitle = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const title = req.params.title; // ✅ ใช้ req.params.title แทน query parameter
+
+            if (!title || title.trim() === "") {
+                res.status(400).json({ message: "Please provide a valid title to search." });
+            }
+
+            const movies = await this.movieService.getMoviesByTitle(title);
+            res.json(movies);
+        } catch (error) {
+            console.error("❌ Error fetching movies by title:", error);
+            res.status(500).json({ message: "Error searching movies", error: error instanceof Error ? error.message : "Unknown error" });
+        }
+    }
+
 }

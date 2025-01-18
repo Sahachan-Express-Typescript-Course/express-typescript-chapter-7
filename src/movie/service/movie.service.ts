@@ -6,6 +6,7 @@ import { Comment } from '../entity/comment.model.js';
 import { MovieRequest } from '../payload/request/movie.request.js';
 import { CommentRequest } from '../payload/request/comment.request.js';
 import { AppDataSource } from '../../data-source.js';
+import { Like } from 'typeorm';
 
 export class MovieService {
     async saveMovie(movie: MovieRequest) {
@@ -37,6 +38,23 @@ export class MovieService {
     }
     async deleteMovie(id: string) {
         await MovieRepository.delete(id);
+    }
+
+    async getMoviesByTitle(title: string) {
+        try {
+            if (!title || title.trim() === "") {
+                throw new Error("Title is required");
+            }
+
+            const movies = await MovieRepository.find({
+                where: { title: Like(`%${title}%`) },
+            });
+
+            return movies;
+        } catch (error) {
+            console.error("❌ Error in getMoviesByTitle:", error);
+            throw new Error("Failed to fetch movies by title");
+        }
     }
 
     // comment
@@ -175,3 +193,4 @@ export class MovieService {
       }
       
 }
+
