@@ -27,6 +27,9 @@ movieRouter.get('/summary/rating', movieController.getMovieRateSummary);
 movieRouter.get('/summary/search', movieController.searchMovie);
 
 
+//sorting by name
+movieRouter.get('/sorting/sort-by', movieController.sortedMoviesbyname);
+
 // Advanced features
 movieRouter.get('/:id/avg', movieController.getAvgRating);
 movieRouter.get('/summary/comment', movieController.getTotalCommentFromEachMovie);
