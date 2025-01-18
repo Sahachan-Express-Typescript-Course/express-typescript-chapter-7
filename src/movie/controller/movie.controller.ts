@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { MovieService } from '../service/movie.service.js';
 
+
 export class MovieController {
     private readonly movieService: MovieService;
 
@@ -88,6 +89,31 @@ export class MovieController {
         res.status(200).json(movies);
     };
 
+    searchMoviesByReleaseDate = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const startDate = req.query.start_date as string | undefined;
+            const endDate = req.query.end_date as string | undefined;
+            const orderBy = (req.query.order_by as 'ASC' | 'DESC') || 'ASC';
+    
+            // เรียกใช้ service เพื่อนำข้อมูลที่กรองและเรียงลำดับแล้ว
+            const movies = await this.movieService.searchMoviesByReleaseDate(startDate, endDate, orderBy);
+    
+            // ส่งกลับข้อมูล
+            res.status(200).json(movies);
+        } catch (error) {
+            console.error('Error searching movies by release date:', error);
+    
+            // ตรวจสอบประเภทของข้อผิดพลาดก่อนการเข้าถึง message
+            const errorMessage = (error instanceof Error) ? error.message : 'Unknown error';
+    
+            // ส่งกลับข้อความข้อผิดพลาด
+            res.status(500).json({ message: 'Internal Server Error', error: errorMessage });
+        }
+    };
+    
+    
+
+
     getMoviesByTitle = async (req: Request, res: Response): Promise<void> => {
         try {
             const title = req.params.title; // ✅ ใช้ req.params.title แทน query parameter
@@ -103,4 +129,5 @@ export class MovieController {
             res.status(500).json({ message: "Error searching movies", error: error instanceof Error ? error.message : "Unknown error" });
         }
     }
+
 }
