@@ -50,10 +50,7 @@ jobs:
                   cp compose.yml dev-ts-ex-ch7-app-dev/compose.yml
                   cd dev-ts-ex-ch7-app-dev
                   export DOCKER_HOST=${{ secrets.DOCKER_HOST }}
-                  export DOCKER_TLS_VERIFY=1
-                  export DOCKER_CERT_PATH=/certs/client
                   docker compose pull
                   docker compose up -d
               env:
                   DOCKER_HOST: ${{ secrets.DOCKER_HOST }}
-                  DOCKER_TLS_VERIFY: 1
