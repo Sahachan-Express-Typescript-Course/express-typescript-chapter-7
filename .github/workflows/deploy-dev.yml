@@ -1,0 +1,53 @@
+name: CI/CD Pipeline
+
+on:
+    push:
+        branches:
+            - dev
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            # Step 1: Checkout the code
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            # Step 2: Set up Node.js environment
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 22
+
+            # Step 3: Write .env.dev file dynamically from GitHub Secret
+            - name: Create .env file
+              run: |
+                  echo ${{ secrets.DEV_ENV_FILE }} | base64 --decode > .env.dev
+
+            - name: Set up QEMU
+              uses: docker/setup-qemu-action@v1
+
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v1
+
+            - name: Log in to Docker Hub
+              uses: docker/login-action@v1
+              with:
+                  username: ${{ secrets.DOCKER_USERNAME }}
+                  password: ${{ secrets.DOCKER_TOKEN }}
+
+            - name: Build and push
+              uses: docker/build-push-action@v2
+              with:
+                  context: .
+                  push: true
+                  tags: ${{ secrets.DOCKER_USERNAME }}/dev-ts-ex-ch7:dev
+
+#            - name: composing
+#              run: |
+#                  mkdir dev-ts-ex-ch7-app
+#                  cp compose.yml dev-ts-ex-ch7-app/compose.yml
+#                  cd dev-ts-ex-ch7-app
+#                  docker-compose -H ${{ secrets.DOCKER_HOST }} pull
+#                  docker-compose -H ${{ secrets.DOCKER_HOST }} up -d
