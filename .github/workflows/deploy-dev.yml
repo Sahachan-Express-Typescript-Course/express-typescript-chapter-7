@@ -44,10 +44,10 @@ jobs:
                   push: true
                   tags: ${{ secrets.DOCKER_USERNAME }}/dev-ts-ex-ch7:dev
 
-#            - name: composing
-#              run: |
-#                  mkdir dev-ts-ex-ch7-app
-#                  cp compose.yml dev-ts-ex-ch7-app/compose.yml
-#                  cd dev-ts-ex-ch7-app
-#                  docker-compose -H ${{ secrets.DOCKER_HOST }} pull
-#                  docker-compose -H ${{ secrets.DOCKER_HOST }} up -d
+            - name: composing
+              run: |
+                  mkdir dev-ts-ex-ch7-app-dev
+                  cp compose.yml dev-ts-ex-ch7-app-dev/compose.yml
+                  cd dev-ts-ex-ch7-app-dev
+                  docker -H ${{ secrets.DOCKER_HOST }} compose  pull
+                  docker -H ${{ secrets.DOCKER_HOST }} compose up -d
