@@ -147,4 +147,22 @@ export class MovieService {
 
         return queryBuilder.getRawMany();
     }
+
+    async filterMoviesWithRating(minRating: number | undefined): Promise<{ movie_id: string; movie_title: string; movie_rating: number }[]> {
+        const queryBuilder = MovieRepository.createQueryBuilder('movie')
+            .leftJoin(Comment, 'comment', 'comment.movie_id = movie.id') // LEFT JOIN to comments
+            .select('movie.id', 'movie_id') // Select movie.id as movie_id
+            .addSelect('movie.title', 'movie_title') // Select movie.title as movie_title
+            .addSelect('CASE WHEN ROUND(AVG(comment.rating), 2) IS NULL THEN 0 ELSE ROUND(AVG(comment.rating), 2) END', 'movie_rating') // Calculate the average rating or set it to 0 if no comments
+            .groupBy('movie.id') // Group by movie.id to aggregate the ratings
+            .addGroupBy('movie.title'); // Group by movie.title for each movie's title
+
+        // Add dynamic filter for minimum rating
+        if (minRating !== undefined && minRating !== null) {
+            queryBuilder.having('ROUND(AVG(comment.rating), 2) >= :minRating', { minRating });
+        }
+
+        // Execute and return the filtered movies
+        return queryBuilder.getRawMany();
+    }
 }
