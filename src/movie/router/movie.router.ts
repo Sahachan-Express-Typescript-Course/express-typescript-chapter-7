@@ -4,6 +4,9 @@ import { MovieController } from '../controller/movie.controller.js';
 const movieRouter = Router();
 const movieController = new MovieController();
 
+// filter name
+movieRouter.get('/filter/name/:title', movieController.getMoviesByTitle); // ✅ เพิ่ม route สำหรับค้นหาหนังตามชื่อ
+
 // movie feature
 movieRouter.get('/', movieController.getAllMovies);
 movieRouter.get('/:id', movieController.getMovieById);
@@ -23,7 +26,19 @@ movieRouter.get('/summary/comment', movieController.getTotalCommentFromEachMovie
 movieRouter.get('/summary/rating', movieController.getMovieRateSummary);
 movieRouter.get('/summary/search', movieController.searchMovie);
 
+
 //sorting by name
 movieRouter.get('/sorting/sort-by', movieController.sortedMoviesbyname);
+
+// Advanced features
+movieRouter.get('/:id/avg', movieController.getAvgRating);
+movieRouter.get('/summary/comment', movieController.getTotalCommentFromEachMovie);
+movieRouter.get('/summary/rating', movieController.getMovieRateSummary);
+movieRouter.get('/summary/search', movieController.searchMovie);
+
+// New feature: Filter movies by release date
+movieRouter.get('/filter/release', movieController.searchMoviesByReleaseDate);
+
+
 
 export default movieRouter;
