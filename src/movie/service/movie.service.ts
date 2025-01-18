@@ -147,4 +147,9 @@ export class MovieService {
 
         return queryBuilder.getRawMany();
     }
+
+    async getMoviesSortedByName(orderBy: 'ASC' | 'DESC'): Promise<{ movie_id: string; movie_title: string }[]> {
+        const queryBuilder = MovieRepository.createQueryBuilder('movie').select('movie.id', 'movie_id').addSelect('movie.title', 'movie_title').orderBy('movie.title', orderBy);
+        return queryBuilder.getRawMany();
+    }
 }

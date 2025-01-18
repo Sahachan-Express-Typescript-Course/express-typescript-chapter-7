@@ -23,4 +23,7 @@ movieRouter.get('/summary/comment', movieController.getTotalCommentFromEachMovie
 movieRouter.get('/summary/rating', movieController.getMovieRateSummary);
 movieRouter.get('/summary/search', movieController.searchMovie);
 
+//sorting by name
+movieRouter.get('/sorting/sort-by', movieController.sortedMoviesbyname);
+
 export default movieRouter;

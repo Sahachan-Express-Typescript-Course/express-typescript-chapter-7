@@ -87,4 +87,11 @@ export class MovieController {
         const movies = await this.movieService.searchMoviesWithDynamicConditions(q, rateNumber, orderBy);
         res.status(200).json(movies);
     };
+
+    sortedMoviesbyname = async (req: Request, res: Response): Promise<void> => {
+        const { orderBy } = req.query;
+        const sortOrder = (orderBy as 'ASC' | 'DESC') || 'ASC'; // Default to 'ASC' if not provided
+        const movies = await this.movieService.getMoviesSortedByName(sortOrder);
+        res.status(200).json(movies);
+    };
 }
