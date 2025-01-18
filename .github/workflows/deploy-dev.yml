@@ -44,13 +44,13 @@ jobs:
                   push: true
                   tags: ${{ secrets.DOCKER_USERNAME }}/dev-ts-ex-ch7:dev
 
-            - name: Compose and Deploy to Remote Host
-              run: |
-                  mkdir dev-ts-ex-ch7-app-dev
-                  cp compose.yml dev-ts-ex-ch7-app-dev/compose.yml
-                  cd dev-ts-ex-ch7-app-dev
-                  export DOCKER_HOST=${{ secrets.DOCKER_HOST }}
-                  docker compose pull
-                  docker compose up -d
-              env:
-                  DOCKER_HOST: ${{ secrets.DOCKER_HOST }}
+#            - name: Compose and Deploy to Remote Host
+#              run: |
+#                  mkdir dev-ts-ex-ch7-app-dev
+#                  cp compose.yml dev-ts-ex-ch7-app-dev/compose.yml
+#                  cd dev-ts-ex-ch7-app-dev
+#                  export DOCKER_HOST=${{ secrets.DOCKER_HOST }}
+#                  docker compose pull
+#                  docker compose up -d
+#              env:
+#                  DOCKER_HOST: ${{ secrets.DOCKER_HOST }}
