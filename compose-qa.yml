@@ -4,4 +4,4 @@ services:
     backend:
         image: oat431/dev-ts-ex-ch7:qa
         ports:
-            - '8081:8080'
+            - '8082:8080'
