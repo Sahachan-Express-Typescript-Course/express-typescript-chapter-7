@@ -2,6 +2,6 @@ version: '3.5'
 
 services:
     backend:
-        image: oat431/demo-ts-ex-v1:latest
+        image: oat431/dev-ts-ex-ch7:qa
         ports:
             - '8082:8080'
