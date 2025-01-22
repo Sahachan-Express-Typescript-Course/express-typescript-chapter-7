@@ -13,7 +13,6 @@ export class Movie extends BaseEntity {
     @Column()
     releaseDate?: Date;
 
-
     @OneToMany(() => Comment, (comment) => comment.movie, { cascade: true })
     comments?: Relation<Comment[]>;
 }
