@@ -23,7 +23,7 @@ jobs:
             # Step 3: Write .env.dev file dynamically from GitHub Secret
             - name: Create .env file
               run: |
-                  echo ${{ secrets.PROD_ENV_FILE }} | base64 --decode > .env.prod
+                  echo ${{ secrets.DEV_ENV_FILE }} | base64 --decode > .env.dev
 
             # Step 4: Set up QEMU
             - name: Set up QEMU
