@@ -19,7 +19,17 @@ app.use(morgan(':date[iso] | :method | :url | :status | :res[content-length] - :
 
 // default route
 app.get('/', (req, res) => {
-    res.json({ message: 'Hello Development Environment' });
+    let message = 'hello';
+    if(process.env.NODE_ENV === 'dev') {
+        message = message.concat(' dev environment');
+    }
+    if(process.env.NODE_ENV === 'prod') {
+        message = message.concat(' prod environment');
+    }
+    if(process.env.NODE_ENV === 'qa') {
+        message = message.concat(' qa environment');
+    }
+    res.json({ msg: message });
 });
 
 // movie route
