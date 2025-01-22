@@ -40,7 +40,7 @@ jobs:
             - name: Build and push
               uses: docker/build-push-action@v6
               with:
-                  file: ./DockerfileDEV
+                  file: ./Dockerfile
                   context: .
                   push: true
                   tags: ${{ secrets.DOCKER_USERNAME }}/dev-ts-ex-ch7:latest
