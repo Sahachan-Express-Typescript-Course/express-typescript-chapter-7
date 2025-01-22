@@ -56,17 +56,17 @@ jobs:
                   HOST: ${{ secrets.SERVER_HOST }}
                   USERNAME: ${{ secrets.SERVER_USER }}
               run: |
-                echo "$SSH_PRIVATE_KEY" > key.pem && chmod 600 key.pem
+                  echo "$SSH_PRIVATE_KEY" > key.pem && chmod 600 key.pem
 
-                ssh -o StrictHostKeyChecking=no -i key.pem $USERNAME@$HOST '
-                mkdir -p ~/backend_app_dev
-                '
+                  ssh -o StrictHostKeyChecking=no -i key.pem $USERNAME@$HOST '
+                  mkdir -p ~/backend_app_dev
+                  '
 
-                scp -i key.pem -o StrictHostKeyChecking=no compose-dev.yml $USERNAME@$HOST:~/backend_app_dev/compose.yml
+                  scp -i key.pem -o StrictHostKeyChecking=no compose-dev.yml $USERNAME@$HOST:~/backend_app_dev/compose.yml
 
-                ssh -o StrictHostKeyChecking=no -i key.pem $USERNAME@$HOST '
-                cd ~/backend_app_dev
-                docker compose down
-                docker compose pull
-                docker compose up -d
-                '
+                  ssh -o StrictHostKeyChecking=no -i key.pem $USERNAME@$HOST '
+                  cd ~/backend_app_dev
+                  docker compose down
+                  docker compose pull
+                  docker compose up -d
+                  '
