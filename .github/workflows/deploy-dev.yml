@@ -50,7 +50,8 @@ jobs:
                   HOST: ${{ secrets.SERVER_HOST }}
                   USERNAME: ${{ secrets.SERVER_USERNAME }}
               run: |
-                echo "$SSH_PRIVATE_KEY" > key.pem && chmod 600 key.pem
-                ssh -o StrictHostKeyChecking=no -i key.pem $USERNAME@$HOST
-                echo "Current directory is $(pwd)"
-                echo "Listing home directory: $(ls -a)"
+                  echo "$SSH_PRIVATE_KEY" > key.pem && chmod 600 key.pem
+                  ssh -o StrictHostKeyChecking=no -i key.pem $USERNAME@$HOST '
+                  echo "Current directory is $(pwd)"
+                  echo "Listing home directory: $(ls -a)" 
+                  '
