@@ -19,15 +19,15 @@ app.use(morgan(':date[iso] | :method | :url | :status | :res[content-length] - :
 
 // default route
 app.get('/', (req, res) => {
-    let message = 'hello';
+    let message = 'Hello, ';
     if (process.env.NODE_ENV === 'dev') {
-        message = message.concat(' dev environment');
+        message = message.concat(' Development Environment');
     }
     if (process.env.NODE_ENV === 'prod') {
-        message = message.concat(' prod environment');
+        message = message.concat(' Production Environment');
     }
     if (process.env.NODE_ENV === 'qa') {
-        message = message.concat(' qa environment');
+        message = message.concat(' Test Environment');
     }
     res.json({ msg: message });
 });
