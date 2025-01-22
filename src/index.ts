@@ -19,7 +19,7 @@ app.use(morgan(':date[iso] | :method | :url | :status | :res[content-length] - :
 
 // default route
 app.get('/', (req, res) => {
-    res.json({ message: 'Hello World!' });
+    res.json({ message: 'Hello Development Environment' });
 });
 
 // movie route

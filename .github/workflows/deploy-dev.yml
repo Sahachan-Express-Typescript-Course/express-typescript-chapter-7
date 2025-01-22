@@ -23,7 +23,7 @@ jobs:
             # Step 3: Write .env.dev file dynamically from GitHub Secret
             - name: Create .env file
               run: |
-                  echo ${{ secrets.QA_ENV_FILE }} | base64 --decode > .env.qa
+                  echo ${{ secrets.DEV_ENV_FILE }} | base64 --decode > .env.dev
 
             - name: Set up QEMU
               uses: docker/setup-qemu-action@v3
@@ -52,6 +52,9 @@ jobs:
               run: |
                   echo "$SSH_PRIVATE_KEY" > key.pem && chmod 600 key.pem
                   ssh -o StrictHostKeyChecking=no -i key.pem $USERNAME@$HOST '
-                  echo "Current directory is $(pwd)"
-                  echo "Listing home directory: $(ls -a)" 
+                  cd ~
+                  cd backend_app
+                  docker compose down
+                  docker compose pull
+                  docker-compose up -d
                   '
