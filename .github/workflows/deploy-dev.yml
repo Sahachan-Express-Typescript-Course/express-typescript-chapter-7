@@ -48,7 +48,7 @@ jobs:
               env:
                   SSH_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }}
                   HOST: ${{ secrets.SERVER_HOST }}
-                  USERNAME: ${{ secrets.SERVER_USERNAME }}
+                  USERNAME: ${{ secrets.SERVER_USER }}
               run: |
                   echo "$SSH_PRIVATE_KEY" > key.pem && chmod 600 key.pem
                   ssh -o StrictHostKeyChecking=no -i key.pem $USERNAME@$HOST '
