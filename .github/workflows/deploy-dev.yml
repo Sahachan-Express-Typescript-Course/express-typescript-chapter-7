@@ -6,7 +6,7 @@ on:
             - dev
 
 jobs:
-    build-docker-image:
+    build-image-and-deploy:
         runs-on: ubuntu-latest
 
         steps:
@@ -43,3 +43,14 @@ jobs:
                   context: .
                   push: true
                   tags: ${{ secrets.DOCKER_USERNAME }}/dev-ts-ex-ch7:dev
+
+            - name: Deploy to server
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }}
+                  HOST: ${{ secrets.SERVER_HOST }}
+                  USERNAME: ${{ secrets.SERVER_USERNAME }}
+              run: |
+                echo "$SSH_PRIVATE_KEY" > key.pem && chmod 600 key.pem
+                ssh -o StrictHostKeyChecking=no -i key.pem $USERNAME@$HOST
+                echo "Current directory is $(pwd)"
+                echo "Listing home directory: $(ls -a)"
